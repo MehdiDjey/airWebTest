@@ -8,30 +8,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class Item implements Parcelable {
-    @SerializedName("news")
-   private ArrayList<News> news;
-
-    @Override
-    public String toString() {
-        return "Item{" +
-                "news=" + news +
-                '}';
-    }
-    public int getSize() {
-        return news.size();
-    }
-    public ArrayList<News> getNews() {
-        return news;
-    }
-
-    public void setNews(ArrayList<News> news) {
-        this.news = news;
-    }
-
-    protected Item(Parcel in) {
-        news = in.createTypedArrayList(News.CREATOR);
-    }
-
     public static final Creator<Item> CREATOR = new Creator<Item>() {
         @Override
         public Item createFromParcel(Parcel in) {
@@ -43,6 +19,31 @@ public class Item implements Parcelable {
             return new Item[size];
         }
     };
+    @SerializedName("news")
+    private ArrayList<News> news;
+
+    protected Item(Parcel in) {
+        news = in.createTypedArrayList(News.CREATOR);
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "news=" + news +
+                '}';
+    }
+
+    public int getSize() {
+        return news.size();
+    }
+
+    public ArrayList<News> getNews() {
+        return news;
+    }
+
+    public void setNews(ArrayList<News> news) {
+        this.news = news;
+    }
 
     @Override
     public int describeContents() {

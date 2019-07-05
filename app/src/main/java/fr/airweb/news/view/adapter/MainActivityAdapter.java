@@ -1,4 +1,4 @@
-package fr.airweb.news;
+package fr.airweb.news.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,31 +11,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import fr.airweb.news.DetailActivity;
 import fr.airweb.news.databinding.ListItemBinding;
 import fr.airweb.news.model.Item;
 import fr.airweb.news.model.News;
 import io.reactivex.annotations.NonNull;
 
-class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.ViewHolder> {
+public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.ViewHolder> {
     private static final String TAG = MainActivityAdapter.class.getSimpleName();
 
     private final ArrayList<Item> itemsList = new ArrayList<>();
     private final ArrayList<News> newsItem = new ArrayList<>();
     private Context context;
 
-    MainActivityAdapter(Context context) {
+    public MainActivityAdapter(Context context) {
         Log.d(TAG, "MainActivityAdapter: ");
         this.context = context;
     }
 
-    void addRepos(Item itemsList) {
-        Log.i(TAG, "addRepos: "+itemsList);
+    public void addRepos(Item itemsList) {
+        Log.i(TAG, "addRepos: " + itemsList);
 
         for (int i = 0; i < itemsList.getSize(); i++) {
-                newsItem.add(itemsList.getNews().get(i));
-            }
-            this.notifyItemInserted(newsItem.size() - 1);
-            this.notifyDataSetChanged();
+            newsItem.add(itemsList.getNews().get(i));
+        }
+        this.notifyItemInserted(newsItem.size() - 1);
+        this.notifyDataSetChanged();
     }
 
     public void clear() {
@@ -62,8 +63,8 @@ class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.ViewH
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick: "+v);
-                Log.i(TAG, "onClick: "+newsItem.get(position));
+                Log.i(TAG, "onClick: " + v);
+                Log.i(TAG, "onClick: " + newsItem.get(position));
                 Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtra("news", newsItem.get(position));
                 context.startActivity(intent);

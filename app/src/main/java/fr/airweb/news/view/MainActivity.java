@@ -1,12 +1,4 @@
-package fr.airweb.news;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package fr.airweb.news.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,10 +9,18 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 
-import butterknife.BindView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import fr.airweb.news.R;
 import fr.airweb.news.model.Item;
+import fr.airweb.news.view.adapter.MainActivityAdapter;
 import fr.airweb.news.viewmodel.ItemViewModel;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -35,15 +35,16 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
+    MainActivityAdapter mainActivityAdapter;
+
     private Context context;
 
-     MainActivityAdapter mainActivityAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        itemViewModel =  ViewModelProviders.of(this).get(ItemViewModel.class);
+        itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
         inidAdapter();
         subscriptions.add(itemViewModel.loadItem()
                 .doOnSubscribe(disposable -> progressBar.setVisibility(View.VISIBLE))
@@ -62,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onFailure(Throwable throwable) {
-        Log.i(TAG, "onFailure: "+throwable.getCause());
+        Log.i(TAG, "onFailure: " + throwable.getCause());
     }
 
     private void onResponse(Item item) {
-        Log.i(TAG, "onResponse: "+item);
+        Log.i(TAG, "onResponse: " + item);
         mainActivityAdapter.addRepos(item);
     }
 

@@ -6,23 +6,38 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 public class News implements Parcelable {
+    public static final Creator<News> CREATOR = new Creator<News>() {
+        @Override
+        public News createFromParcel(Parcel in) {
+            return new News(in);
+        }
+
+        @Override
+        public News[] newArray(int size) {
+            return new News[size];
+        }
+    };
     @SerializedName("nid")
-    private  int nid;
-
+    private int nid;
     @SerializedName("type")
-    private  String  type;
-
+    private String type;
     @SerializedName("title")
-    private  String title;
-
+    private String title;
     @SerializedName("picture")
-    private  String picture;
-
+    private String picture;
     @SerializedName("content")
-    private  String content;
-
+    private String content;
     @SerializedName("dateformated")
-    private  String dateformated;
+    private String dateformated;
+
+    protected News(Parcel in) {
+        nid = in.readInt();
+        type = in.readString();
+        title = in.readString();
+        picture = in.readString();
+        content = in.readString();
+        dateformated = in.readString();
+    }
 
     @Override
     public String toString() {
@@ -83,27 +98,6 @@ public class News implements Parcelable {
     public void setDateformated(String dateformated) {
         this.dateformated = dateformated;
     }
-
-    protected News(Parcel in) {
-        nid = in.readInt();
-        type = in.readString();
-        title = in.readString();
-        picture = in.readString();
-        content = in.readString();
-        dateformated = in.readString();
-    }
-
-    public static final Creator<News> CREATOR = new Creator<News>() {
-        @Override
-        public News createFromParcel(Parcel in) {
-            return new News(in);
-        }
-
-        @Override
-        public News[] newArray(int size) {
-            return new News[size];
-        }
-    };
 
     @Override
     public int describeContents() {

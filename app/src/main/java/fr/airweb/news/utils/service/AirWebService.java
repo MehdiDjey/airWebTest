@@ -1,11 +1,9 @@
 package fr.airweb.news.utils.service;
 
 import fr.airweb.news.model.Item;
-
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -14,7 +12,7 @@ import retrofit2.http.GET;
 import static fr.airweb.news.utils.service.ConstantUrl.BASE_URL;
 
 public final class AirWebService {
-    private static volatile AirWebService  instance = null;
+    private static volatile AirWebService instance = null;
     private AirWebGet airWebGet;
 
 
@@ -28,19 +26,18 @@ public final class AirWebService {
 
         Retrofit retrofit =
                 new Retrofit.Builder().baseUrl(BASE_URL)
-                .client(okHttpClient)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+                        .client(okHttpClient)
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-            airWebGet = retrofit.create(AirWebGet.class);
+        airWebGet = retrofit.create(AirWebGet.class);
 
     }
 
 
-
-    public  static AirWebService getInstance() {
-        if(instance == null) {
+    public static AirWebService getInstance() {
+        if (instance == null) {
             synchronized (AirWebService.class) {
                 if (instance == null) {
                     instance = new AirWebService();
@@ -48,7 +45,7 @@ public final class AirWebService {
 
             }
         }
-        return  instance;
+        return instance;
     }
 
     public AirWebGet provideClient() {
@@ -56,12 +53,12 @@ public final class AirWebService {
     }
 
 
- public interface  AirWebGet {
+    public interface AirWebGet {
 
-    @GET("psg/psg.json")
-    Observable<Item> getItems();
+        @GET("psg/psg.json")
+        Observable<Item> getItems();
 
- }
+    }
 
 
 }
